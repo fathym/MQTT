@@ -10,7 +10,7 @@ without limitation the rights to use, copy, modify, merge, publish,
 distribute, sublicense, and/or sell copies of the Software, and to
 permit persons to whom the Software is furnished to do so, subject to
 the following conditions:
-   
+
 The above copyright notice and this permission notice shall be
 included in all copies or substantial portions of the Software.
 
@@ -34,10 +34,10 @@ sample code bearing this copyright.
 // distribute, sublicense, and/or sell copies of the Software, and to
 // permit persons to whom the Software is furnished to do so, subject to
 // the following conditions:
-// 
+//
 // The above copyright notice and this permission notice shall be
 // included in all copies or substantial portions of the Software.
-// 
+//
 // THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
 // EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
 // MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
@@ -51,6 +51,8 @@ sample code bearing this copyright.
 #ifndef MQTT_h
 #define MQTT_h
 
+#include "FathymBuild.h" // Load local build/config file
+
 #if defined(ARDUINO)
 #include "Client.h"
 #elif defined(SPARK)
@@ -59,11 +61,16 @@ sample code bearing this copyright.
 #include "spark_wiring_usbserial.h"
 #endif
 
+
 // MQTT_MAX_PACKET_SIZE : Maximum packet size
+#ifndef MQTT_MAX_PACKET_SIZE
 #define MQTT_MAX_PACKET_SIZE 128
+#endif // Let this be overriden by build.h if present
 
 // MQTT_KEEPALIVE : keepAlive interval in Seconds
+#ifndef MQTT_KEEPALIVE
 #define MQTT_KEEPALIVE 15
+#endif // Let this be overriden by build.h if present
 
 #define MQTTPROTOCOLVERSION 3
 #define MQTTCONNECT     1 << 4  // Client request to connect to Server
@@ -114,7 +121,7 @@ private:
 
 public:
     MQTT();
-    
+
     MQTT(char* domain, uint16_t port, void (*callback)(char*,uint8_t*,unsigned int)
 #if defined(ARDUINO)
         , Client& client
@@ -131,7 +138,7 @@ public:
     bool connect(const char *, const char *, EMQTT_QOS, uint8_t, const char *);
     bool connect(const char *, const char *, const char *, const char *, EMQTT_QOS, uint8_t, const char*);
     void disconnect();
-    
+
     bool publish(const char *, const char *);
     bool publish(const char *, const char *, EMQTT_QOS, uint16_t *messageid);
     bool publish(const char *, const uint8_t *, unsigned int);
