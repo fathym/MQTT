@@ -51,7 +51,9 @@ sample code bearing this copyright.
 #ifndef MQTT_h
 #define MQTT_h
 
-#include "FathymBuild.h" // Load local build/config file
+// Load build configuration settings
+//#include "FathymBuild.h" // uncomment for local Particle Dev build
+#include "../FathymBuild.h"
 
 #if defined(ARDUINO)
 #include "Client.h"
